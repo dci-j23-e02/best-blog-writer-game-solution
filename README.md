@@ -1,1 +1,1 @@
-# best-blog-writer-game-solution
+# Best Blog Writer Game Solution
