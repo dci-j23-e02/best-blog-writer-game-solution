@@ -20,7 +20,7 @@ public class BlogEntry {
   @Column(nullable = false)
   private String author;
 
-  @Column(length = 500, nullable = false)
+  @Column(length = 1000, nullable = false)
   private String content;
 
   // Constructors

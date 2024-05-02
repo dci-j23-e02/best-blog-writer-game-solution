@@ -17,8 +17,8 @@ public class BlogEntryService {
 
    // save blog entry
   public BlogEntry saveBlogEntry(String title, String author, String content) throws IllegalArgumentException {
-    if(content.length()!=500) throw new IllegalArgumentException("Blog Entry content must exactly be 500 characters long");
-    if(!(content.contains(title) && title.isBlank())) throw new IllegalArgumentException("Blog Entry content must include the title");
+    if(! (content.length() > 500 && content.length() < 600) ) throw new IllegalArgumentException("Blog Entry content must exactly be between 500 and 600 characters long");
+    if(! content.contains(title)) throw new IllegalArgumentException("Blog Entry content must include the title");
     // check the number of references , minimum 3
     if(countReferences(content) < 3) throw new IllegalArgumentException("Blog Entry content must include at least three references");
     return repository.save(new BlogEntry(title, author, content));
@@ -34,7 +34,9 @@ public class BlogEntryService {
     List<BlogEntry> entries = repository.findAll();
     Stream<BlogEntry> entriesStream = entries.stream();
     List<BlogEntry> topEntries = entriesStream
-        .sorted((e1, e2) -> Integer.compare(countReferences(e2.getContent()), countReferences(e1.getContent())))
+        .sorted(
+            (e1, e2) -> Integer.compare(countReferences(e2.getContent()), countReferences(e1.getContent()))
+        )
         .collect(Collectors.toList());
 
     List<BlogEntry> topThree = new ArrayList<>();
